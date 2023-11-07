@@ -49,7 +49,7 @@ pipeline {
                         sh "git config --global user.email jenkins@jenkins.com"
                         sh "git config --global user.name jenkins"
                         sh "git status"
-                        sh "git remote set-url origin https://${USER}:${PWD}@https://github.com/Denorjhan/jenkins.git"
+                        sh "git remote set-url origin https://${USER}:${PWD}@github.com/Denorjhan/jenkins.git"
                         sh "git add ."
                         sh "git commit -m 'ci pipeline: auto-increment version'"
                         sh "git push origin HEAD:main"
