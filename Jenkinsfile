@@ -15,7 +15,7 @@ pipeline {
                         env.IMAGE_NAME = "$newVersion-$BUILD_NUMBER"
 
                         echo "newVersion = $newVersion"
-                        echo "image name = $IMAGE_NAME"
+                        echo "image name = $IMAGE_NAME" 
                     }
                 }
             }
