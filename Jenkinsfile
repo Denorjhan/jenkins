@@ -32,12 +32,16 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Image') {
             steps {
                 script {
-                    // Add your build commands here
-                    //sh 'npm install' // Example: for a Node.js project
-                    echo "hello"
+                    dir("app"){
+                        withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
+                            sh "docker build -t denorjhan/deno/node-app:${IMAGE_NAME} ."
+                            sh "echo $PWD | docker login -u $USER --password-stdin"
+                            sh "docker push denorjhan/deno/node-app:${IMAGE_NAME}"
+                        }
+                    }
                 }
             }
         }
