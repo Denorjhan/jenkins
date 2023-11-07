@@ -46,12 +46,19 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
-                        sh "git config --global user.email jenkins@jenkins.com"
+                        sh 'git config --global user.email "jenkins@jenkins.com"'
+                        sh 'git config --global user.name "jenkins"'
+                        sh 'git remote set-url origin https://$USER:$PASS@https://github.com/Denorjhan/jenkins.git'
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:main'
+
+                        /*sh "git config --global user.email jenkins@jenkins.com"
                         sh "git config --global user.name jenkins"
                         sh "git remote set-url origin https://github.com/Denorjhan/jenkins.git"
                         sh "git add ."
                         sh "git commit -m 'ci pipeline: auto-increment version'"
-                        sh "git push origin HEAD:main"
+                        sh "git push origin HEAD:main"*/
                     }
                 }
             }
