@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     dir("app"){
-                        sh "npm version version"
+                        sh "npm version minor"
 
                         def packageJson = readJSON file: "package.json"
                         def newVersion = packageJson.version
