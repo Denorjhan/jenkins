@@ -36,8 +36,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
                     sh "echo $PWD | docker login -u $USER --password-stdin"
-                    sh "docker build -t denorjhan/deno/node-app:${IMAGE_NAME} ."
-                    sh "docker push denorjhan/deno/node-app:${IMAGE_NAME}"
+                    sh "docker build -t denorjhan/node-app:${IMAGE_NAME} ."
+                    sh "docker push denorjhan/node-app:${IMAGE_NAME}"
+                    echo "$PWD $USER"
                 }
             }
         }
