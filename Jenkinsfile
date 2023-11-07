@@ -21,22 +21,23 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                script {
+                    dir("app"){
+                        sh "npm install"
+                        sh "npm run test"
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
                     // Add your build commands here
                     //sh 'npm install' // Example: for a Node.js project
                     echo "hello"
-                }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                script {
-                    // Add your testing commands here
-                   // sh 'npm test' // Example: for running tests
-                   echo "hello"
                 }
             }
         }
