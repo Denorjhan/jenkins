@@ -1,14 +1,22 @@
 pipeline {
     agent any // Use any available agent (or specify a specific label)
-    tools{
+    tools {
         nodejs "node"
     }
     stages {
-        stage('Checkout') {
+        stage('Increment Version') {
             steps {
                 script {
-                    // Check out your source code from a version control system
-                    //checkout scm
+                    dir("app"){
+                        sh "npm version version"
+
+                        def packageJson = readJSON file: "package.json"
+                        def newVersion = packageJson.version
+                        env.IMAGE_NAME = "$newVersion-$BUILD_NUMBER"
+
+                        echo "newVersion = $newVersion"
+                        echo "image name = $IMAGE_NAME"
+                    }
                 }
             }
         }
@@ -18,6 +26,7 @@ pipeline {
                 script {
                     // Add your build commands here
                     //sh 'npm install' // Example: for a Node.js project
+                    echo "hello"
                 }
             }
         }
@@ -27,6 +36,7 @@ pipeline {
                 script {
                     // Add your testing commands here
                    // sh 'npm test' // Example: for running tests
+                   echo "hello"
                 }
             }
         }
@@ -37,9 +47,9 @@ pipeline {
                     // Add your deployment commands here
                     /*sh 'docker build -t my-app .'
                     sh 'docker run -d -p 8080:80 my-app'*/
+                    echo "hello"
                 }
             }
         }
     }
-
 }
