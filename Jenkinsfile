@@ -43,13 +43,18 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Commit Version Increment') {
             steps {
                 script {
-                    // Add your deployment commands here
-                    /*sh 'docker build -t my-app .'
-                    sh 'docker run -d -p 8080:80 my-app'*/
-                    echo "hello"
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PWD', usernameVariable: 'USER')]) {
+                        sh "git config --global user.email jenkins@jenkins.com"
+                        sh "git config --global user.name jenkins"
+                        sh "git status"
+                        sh "git remote set-url origin https://$USER:$PWD@https://github.com/Denorjhan/jenkins.git"
+                        sh "git add ."
+                        sh "git commit -m 'ci pipeline: auto-increment version'"
+                        sh "git push origin HEAD:main"
+                     }
                 }
             }
         }
